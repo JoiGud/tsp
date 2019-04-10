@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib
-# matplotlib.use('TkAgg')
+matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 from matplotlib import animation
 import math, copy
@@ -13,15 +13,20 @@ from City import City
 size_of_grid = 1000
 number_of_cities = 48
 
+fig = plt.figure(1)
+ax = plt.axes(title="TSP", xlim=(0, size_of_grid), ylim=(0, size_of_grid))
+
 # Initialize cities pool TODO: make a class of this
 cities = []
 for i in range(number_of_cities):
   [x,y] = random.sample(range(size_of_grid), 2)
   cities.append(City(x,y))
-  # plt.plot(x,y,"or")
-print(plt.get_backend())
-plt.plot([1, 2, 3, 4])
-plt.ylabel('some numbers')
+  plt.plot(x,y,"or")
+# print(plt.get_backend())
+# plt.plot([1, 2, 3, 4])
+# plt.ylabel('some numbers')
+
+# line, = ax.plot([], [], lw=2)
 plt.show()
 
 
