@@ -9,22 +9,20 @@ import random
 import pdb
 
 from City import City
+from Tour import Tour
 
-size_of_grid = 1000
+grid_size = 1000
 number_of_cities = 48
 
+#initalise figure
 fig = plt.figure(1)
-ax = plt.axes(title="TSP", xlim=(0, size_of_grid), ylim=(0, size_of_grid))
+ax = plt.axes(title="TSP", xlim=(0, grid_size), ylim=(0, grid_size))
 
-# Initialize cities pool TODO: make a class of this
-cities = []
-for i in range(number_of_cities):
-  [x,y] = random.sample(range(size_of_grid), 2)
-  cities.append(City(x,y))
-  plt.plot(x,y,"or")
-# print(plt.get_backend())
-# plt.plot([1, 2, 3, 4])
-# plt.ylabel('some numbers')
+tour = Tour(number_of_cities, grid_size)
+tour.generate_new_tour()
+print(tour.get_total_distance())
+
+plt.plot([t.x for t in tour.city_list],[t.y for t in tour.city_list],"ro")
 
 # line, = ax.plot([], [], lw=2)
 plt.show()
@@ -33,18 +31,8 @@ plt.show()
 
 # Tweak the graph
 # fig = plt.figure()
-# ax = plt.axes(xlim=(0, size_of_grid), ylim=(0, size_of_grid))
+# ax = plt.axes(xlim=(0, grid_size), ylim=(0, grid_size))
 # line, = ax.plot([], [], lw=2)
 
-# plt.show()
-
-
-# tour = random.sample(range(15),15);
-# for temperature in numpy.logspace(0,5,num=100000)[::-1]:
-#   [i,j] = sorted(random.sample(range(15),2));
-#   newTour =  tour[:i] + tour[j:j+1] +  tour[i+1:j] + tour[i:i+1] + tour[j+1:];
-#   if math.exp( ( sum([ math.sqrt(sum([(cities[tour[(k+1) % 15]][d] - cities[tour[k % 15]][d])**2 for d in [0,1] ])) for k in [j,j-1,i,i-1]]) - sum([math.sqrt(sum([(cities[newTour[(k+1) % 15]][d] - cities[newTour[k % 15]][d])**2 for d in [0,1] ])) for k in [j,j-1,i,i-1]])) / temperature) > random.random():
-#       tour = copy.copy(newTour);
-# plt.plot([cities[tour[i % 15]][0] for i in range(16)], [cities[tour[i % 15]][1] for i in range(16)], 'xb-');
 # plt.show()
 
