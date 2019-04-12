@@ -19,10 +19,12 @@ fig = plt.figure(1)
 ax = plt.axes(title="TSP", xlim=(0, grid_size), ylim=(0, grid_size))
 
 tour = Tour(number_of_cities, grid_size)
-tour.generate_new_tour()
+tour.init_city_list()
+tour.init_tour()
 print(tour.get_total_distance())
 
 plt.plot([t.x for t in tour.city_list],[t.y for t in tour.city_list],"ro")
+plt.plot([t.x for t in tour.tour_list],[t.y for t in tour.tour_list],"b")
 
 # line, = ax.plot([], [], lw=2)
 plt.show()
