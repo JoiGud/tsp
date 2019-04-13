@@ -2,12 +2,12 @@ import math
 import random
 from city import City
 import copy
-import pdb
 
 class Tour:
     def __init__(self, number_of_cities, grid_size):
       self.number_of_cities = number_of_cities
       self.grid_size = grid_size
+      self.tour_distance = 0
       self.city_list = []
       self.tour_list = []
 
@@ -19,20 +19,19 @@ class Tour:
 
     def init_tour_list(self):
       self.tour_list = random.sample(self.city_list, self.number_of_cities)
-      # self.tour_list.append(self.tour_list[0]) # Make it a roundtrip
+      self.calc_total_distance()
 
-    def get_total_distance(self):
+    def calc_total_distance(self):
       distance = 0
       for i, o in enumerate(self.tour_list[:-1]):
         distance += o.distance(self.tour_list[i+1])
       distance += self.tour_list[-1].distance(self.tour_list[0]) # Make it a roundtrip
-      return distance
+      self.tour_distance = distance
 
     def get_new_tour_with_swapped_cities(self, i, j):
       tmp_tour = copy.deepcopy(self)
       tmp_tour.tour_list[i:j] = reversed(tmp_tour.tour_list[i:j])
-      # tmp_tour.tour_list[i:j] = self.tour_list[j]
-      # tmp_tour.tour_list[j] = self.tour_list[i]
+      tmp_tour.calc_total_distance()
       return tmp_tour
     
     def __repr__(self):
