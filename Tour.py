@@ -15,7 +15,6 @@ class Tour:
       for dummy in range(self.number_of_cities):
         [x,y] = random.sample(range(self.grid_size), 2)
         self.city_list.append(City(x,y))
-        # plt.plot(x,y,"or")
       return self.city_list
 
     def init_tour_list(self):
@@ -26,14 +25,14 @@ class Tour:
       distance = 0
       for i, o in enumerate(self.tour_list[:-1]):
         distance += o.distance(self.tour_list[i+1])
-      # pdb.set_trace()
       distance += self.tour_list[-1].distance(self.tour_list[0]) # Make it a roundtrip
       return distance
 
-    def get_new_tour_with_swapped_cities(self, i, k):
-      tmp_tour = copy.copy(self)
-      tmp_tour.tour_list[i] = self.tour_list[k]
-      tmp_tour.tour_list[k] = self.tour_list[i]
+    def get_new_tour_with_swapped_cities(self, i, j):
+      tmp_tour = copy.deepcopy(self)
+      tmp_tour.tour_list[i:j] = reversed(tmp_tour.tour_list[i:j])
+      # tmp_tour.tour_list[i:j] = self.tour_list[j]
+      # tmp_tour.tour_list[j] = self.tour_list[i]
       return tmp_tour
     
     def __repr__(self):

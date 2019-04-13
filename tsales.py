@@ -21,7 +21,7 @@ def acceptance_probability(energy, new_energy, current_temp):
 
 grid_size = 1000
 number_of_cities = 48
-temperature = 10000
+temperature = 100000
 cooling_rate = 0.003
 
 # Initalize starting values
@@ -42,14 +42,15 @@ plt.plot([t.x for t in best_solution.city_list],[t.y for t in best_solution.city
 # Lets do some annealing
 while temperature > 1:
   # The consecutive-swap neighbour generator is expected to perform better than the arbitrary-swap one
-  [i,k] = random.sample(range(number_of_cities),2)
-  new_tour = current_tour.get_new_tour_with_swapped_cities(i,k)
+  [i,j] = sorted(random.sample(range(number_of_cities),2))
+
+  new_tour = current_tour.get_new_tour_with_swapped_cities(i,j)
 
   if(acceptance_probability(current_tour.get_total_distance(), new_tour.get_total_distance(), temperature) > random.uniform(0,1)):
-    current_tour = copy.copy(new_tour)
+    current_tour = copy.deepcopy(new_tour)
 
   if(current_tour.get_total_distance() < best_solution.get_total_distance()):
-    best_solution = copy.copy(current_tour)
+    best_solution = copy.deepcopy(current_tour)
 
   distance_timeseries.append(best_solution.get_total_distance())
 
