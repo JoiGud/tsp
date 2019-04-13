@@ -1,6 +1,7 @@
 import math
 import random
-from City import City
+from city import City
+import copy
 import pdb
 
 class Tour:
@@ -17,22 +18,23 @@ class Tour:
         # plt.plot(x,y,"or")
       return self.city_list
 
-    def init_tour(self):
+    def init_tour_list(self):
       self.tour_list = random.sample(self.city_list, self.number_of_cities)
-      self.tour_list.append(self.tour_list[0]) # Make it a roundtrip
+      # self.tour_list.append(self.tour_list[0]) # Make it a roundtrip
 
     def get_total_distance(self):
       distance = 0
+      for i, o in enumerate(self.tour_list[:-1]):
+        distance += o.distance(self.tour_list[i+1])
       # pdb.set_trace()
-      for i, o in enumerate(self.city_list[:-1]):
-        distance += o.distance(self.city_list[i+1])
+      distance += self.tour_list[-1].distance(self.tour_list[0]) # Make it a roundtrip
       return distance
+
+    def get_new_tour_with_swapped_cities(self, i, k):
+      tmp_tour = copy.copy(self)
+      tmp_tour.tour_list[i] = self.tour_list[k]
+      tmp_tour.tour_list[k] = self.tour_list[i]
+      return tmp_tour
     
-    # def distance(self, city):
-    #     xDis = abs(self.x - city.x)
-    #     yDis = abs(self.y - city.y)
-    #     distance = math.sqrt((xDis ** 2) + (yDis ** 2))
-    #     return distance
-    
-    # def __repr__(self):
-    #     return "(" + str(self.x) + "," + str(self.y) + ")"
+    def __repr__(self):
+        return "(" + str(self.x) + "," + str(self.y) + ")"
